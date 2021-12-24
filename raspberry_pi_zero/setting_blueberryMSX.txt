@@ -1,0 +1,181 @@
+MSX-mini のために Raspberry Pi Zero W に Blueberry Pi をセットアップする
+
+※TAB幅4, 固定ピッチフォントでご覧下さい。
+--------------------------------------------------------------------------------
+1. 用意するモノ
+	(1) Windows PC (MacやLinuxでも良いですが、この説明書は Windows PC を利用した場合の
+	    説明しかありません。)
+	(2) Raspberry Pi Zero W
+	(3) microSDHCカード 32GB (他の容量のモノでも良いですが、試したのはこのサイズです)
+	(4) Windows PC で使える microSDHCカードリーダライタ
+	(5) インターネット回線
+	(6) USBキーボード(設定の時だけ使用)
+	(7) USBゲームパッド
+	(8) USB-HUB(設定の時だけ使用)
+
+2. セットアップ
+2.1. Raspberry Pi OS のインストーラーをダウンロードする
+	下記のサイトにアクセスして、Install Raspberry Pi OS using Raspberry Pi Imager の
+	ところの Download Windows ボタンをクリックする。
+
+	https://www.raspberrypi.com/software/
+
+	この執筆時点で imager_1.6.2.exe がダウンロードされる。
+
+2.2. Raspberry Pi OS のインストーラーをインストールする
+	2.1.でダウンロードしたファイルを起動すると、インストーラーが輝度するので、
+	インストールウィザードの指示に従ってインストールする。
+
+2.3. Raspberry Pi OS のインストーラーを起動する
+	スタートメニューから Raspberry Pi Imager を起動する。
+
+2.4. Raspberry Pi Imager を使って microSDHCカードに Raspberry Pi OS Lite をインストールする
+	Windows PC に、用意した microSDカードを接続する。
+
+	ラズベリーのアイコンと、その下に Raspberry Pi と書かれたウィンドウになっている。
+	下に、水平3つ並ぶ形でコンボボックスが配置されている。
+	左から Operating System, Storage, WRITE となっている。
+
+	Operating System は、ボタンのキャプションに CHOOSE OS と書かれている。
+	このボタンをクリックする。
+
+	Raspberry Pi OS Lite をクリックする。
+
+	コンボボックスが閉じるので、今度は Storage のボタンのクリックする。
+	Storage は、ボタンのキャプションに CHOOSE STORA... と書かれている。
+	このボタンをクリックする。
+	接続した microSDカードを選択する。
+
+	コンボボックスが閉じるので、今度は WRITE をクリックして、microSDHCカードへ書き出す。
+	インターネット経由で OSイメージをダウンロードして書き込まれる。
+
+2.5. Raspberry Pi を起動する
+	microSDHCカードを Windows PC から取り外し、Raspberry Pi Zero W の SDスロットに差し込む。
+	HDMI, USBゲームパッドを接続してから、USBに電源を入れる。
+
+	login ID を pi
+	password を raspberry
+	でログインする。
+
+	sudo raspi-config で設定画面を起動する。
+	1. System Options を選択する。
+	S1. Wireless LAN を選択する。
+	JP Japan を選択。
+	SSID を聞いてくるので、自分のアクセスポイントの SSID を入力。
+	パスフレーズを聞いてくるので、自分のアクセスポイントのパスフレーズを入力。
+	最初の画面に戻る。
+	Finish を選んで reboot するか聞かれるので、reboot する。
+	再びログイン。
+
+	sudo raspi-config で日本にする。
+	5. Localization Options Configure language and regional settings
+	L1. Locale
+	ja_JP.UTF-8 UTF-8 だけにチェックを入れる
+	ja_JP.UTF-8
+
+	5. Localization Options Configure language and regional settings
+	L2. Timesone
+	Asia
+	Tokyo
+
+	5. Localization Options Configure language and regional settings
+	L3. Keyboard
+	Generic 105-Key PC (intl.)
+	Other
+	Japanese
+	Japanese - Japanese (OADG 109A)
+	The default for the keyboard layout
+	No compose key
+
+	設定する。
+	sudo nano /boot/config.txt
+
+	下記を書き替える。
+
+	カメラは使わない。
+	camera_auto_detect=1
+	↓
+	camera_auto_detect=0
+
+	解像度を下げる
+	#hdmi_group=1
+	#hdmi_mode=1
+	↓
+	hdmi_group=1
+	hdmi_mode=4
+
+		【メモ】
+			hdmi_mode=1  # VGA
+			hdmi_mode=2  # 480p 60Hz
+			hdmi_mode=4  # 720p 60Hz
+			https://elinux.org/RPiconfig#Video_mode_options
+
+	[CTRL]+[O] で保存、[CTRL]+[X] で終了。
+	sudo nano /boot/cmdline.txt
+
+	1行しか無いが、その1行の行末に quiet を追加すると、起動時にダラダラとたくさん表示されるログが出てこなくなる。
+	ラスベリーのアイコンも出てこなくなる。
+
+2.6. 自動ログインを設定する
+	sudo raspi-config
+
+	1. System Options
+	S5. Boot / Auto Login Select boot info desktop or to command line
+	B2. Console Autologin Text console, automatically logged in as 'pi' user
+
+	これで電源投入直後に自動ログインされるようになる。
+
+2.7. Samba を追加する
+	cd ~
+	sudo apt-get update
+	sudo apt-get upgrade
+	sudo apt-get install samba samba-common-bin
+	sudo mkdir -m 1777 /share
+	sudo mkdir /etc/samba
+	sudo nano /etc/samba/smb.conf
+
+	[share]
+	Comment = Pi shared folder
+	Path = /share
+	Browseable = yes
+	Writeable = Yes
+	only guest = no
+	create mask = 0777
+	directory mask = 0777
+	Public = yes
+	Guest ok = yes
+
+	[CTRL]+[O] で保存、[CTRL]+[X] で終了。
+
+	
+
+2.8. Blueberry Pi インストール
+	参考: https://github.com/matheusjgsantos/BlueberryMSX-2.0plus
+
+	sudo apt-get install -y git libsdl2-2.0-0 libdrm2 libgbm1 libgles2 libegl1 libgl1-mesa-dri
+	git clone https://github.com/WiringPi/WiringPi.git
+	cd WiringPi
+	./build
+
+	/boot/config.txt を編集する
+
+	sudo nano /boot/config.txt
+
+	[all]セクションに下記のように追記する。
+
+	[all]
+	dtparam=audio=on
+	# dtoverlay=vc4-fkms-v3d		←これを有効にすると起動時に画面が表示されなくなる
+	max_framebuffers=2
+
+	[CTRL]+[O] で保存、[CTRL]+[X] で終了。
+	cd ~
+
+	git clone https://github.com/matheusjgsantos/BlueberryMSX-2.0plus.git
+
+	【メモ】
+		https://github.com/matheusjgsantos/BlueberryMSX-2.0plus
+
+2.9. blueberryMSX を起動する
+	cd ~/BlueberryMSX-2.0plus
+	./bluemsx.sh
