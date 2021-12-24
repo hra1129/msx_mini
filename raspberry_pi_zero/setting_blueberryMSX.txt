@@ -147,7 +147,8 @@ MSX-mini のために Raspberry Pi Zero W に Blueberry Pi をセットアップする
 
 	[CTRL]+[O] で保存、[CTRL]+[X] で終了。
 
-	
+	SAMBAユーザー pi を追加する。
+	sudo smbpasswd -a pi
 
 2.8. Blueberry Pi インストール
 	参考: https://github.com/matheusjgsantos/BlueberryMSX-2.0plus
