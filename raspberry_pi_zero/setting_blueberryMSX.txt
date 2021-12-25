@@ -70,8 +70,11 @@ MSX-mini のために Raspberry Pi Zero W に Blueberry Pi をセットアップする
 	sudo raspi-config で日本にする。
 	5. Localization Options Configure language and regional settings
 	L1. Locale
-	ja_JP.UTF-8 UTF-8 だけにチェックを入れる
-	ja_JP.UTF-8
+	en_US.UTF-8 UTF-8 だけにチェックを入れる
+	en_US.UTF-8
+
+	→これを ja_JP.UTF-8 にしてしまうと、エラーメッセージなどがすべて日本語文字列になり、
+	  日本語表示に対応していないターミナルが■の羅列で表示するようになって読めなくなるので注意。
 
 	5. Localization Options Configure language and regional settings
 	L2. Timesone
@@ -180,3 +183,8 @@ MSX-mini のために Raspberry Pi Zero W に Blueberry Pi をセットアップする
 2.9. blueberryMSX を起動する
 	cd ~/BlueberryMSX-2.0plus
 	./bluemsx.sh
+
+2.10. python をセットアップする
+	sudo apt-get install python3-dev python3-pip
+	sudo apt-get install python3-pygame-sdl2
+
