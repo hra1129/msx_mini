@@ -1,0 +1,20 @@
+{
+	"screen width": 1920,
+	"screen height": 1080,
+	"font name": "GenJyuuGothic-P-Medium.ttf",
+	"menu item font size": 60,
+	"menu item height": 70,
+	"menu fadein color": [0,0,0],
+	"menu fadeout color": [0,0,0],
+	"menu item color": [0,199,212],
+	"menu current item color": [200,250,255],
+	"menu image": "menu.png",
+	"menu item position": [32,290,1856,710],
+	"information font size": 32,
+	"information item height": 40,
+	"information image": "info.png",
+	"information position": [360,100,1528,890],
+	"games": "games.json",
+	"bluemsx path": "/home/pi/BlueberryMSX-2.0plus",
+	"shutdown": ""
+}

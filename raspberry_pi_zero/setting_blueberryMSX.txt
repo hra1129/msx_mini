@@ -70,11 +70,10 @@ MSX-mini のために Raspberry Pi Zero W に Blueberry Pi をセットアップする
 	sudo raspi-config で日本にする。
 	5. Localization Options Configure language and regional settings
 	L1. Locale
-	en_US.UTF-8 UTF-8 だけにチェックを入れる
+	en_US.UTF-8 UTF-8, ja_JP.UTF-8.UTF-8 の2つだけにチェックを入れる
 	en_US.UTF-8
-
-	→これを ja_JP.UTF-8 にしてしまうと、エラーメッセージなどがすべて日本語文字列になり、
-	  日本語表示に対応していないターミナルが■の羅列で表示するようになって読めなくなるので注意。
+		→これを ja_JP.UTF-8 にしてしまうと、エラーメッセージなどがすべて日本語文字列になり、
+		  日本語表示に対応していないターミナルが■の羅列で表示するようになって読めなくなるので注意。
 
 	5. Localization Options Configure language and regional settings
 	L2. Timesone
@@ -108,12 +107,19 @@ MSX-mini のために Raspberry Pi Zero W に Blueberry Pi をセットアップする
 	hdmi_mode=4
 
 		【メモ】
-			hdmi_mode=1  # VGA
+			hdmi_mode=1  # VGA			→ 最近の高解像度モニターはVGAに対応していないものも多いので注意。
 			hdmi_mode=2  # 480p 60Hz
 			hdmi_mode=4  # 720p 60Hz
 			https://elinux.org/RPiconfig#Video_mode_options
 
+			これ間違えると、表示が出なくなる。
+			表示が出なくなった場合は、HDMIモニターを未接続状態で起動する。
+			その後、起動が落ち着いた頃(PCからRASPBERRYPIに接続できる)に、HDMIを接続する。
+
 	[CTRL]+[O] で保存、[CTRL]+[X] で終了。
+
+	起動時にログが流れるのを避ける場合は、下記の修正を行う。
+
 	sudo nano /boot/cmdline.txt
 
 	1行しか無いが、その1行の行末に quiet を追加すると、起動時にダラダラとたくさん表示されるログが出てこなくなる。
@@ -153,26 +159,13 @@ MSX-mini のために Raspberry Pi Zero W に Blueberry Pi をセットアップする
 	SAMBAユーザー pi を追加する。
 	sudo smbpasswd -a pi
 
-2.8. Blueberry Pi インストール
+2.8. Blueberry MSX2.0plus インストール
 	参考: https://github.com/matheusjgsantos/BlueberryMSX-2.0plus
 
 	sudo apt-get install -y git libsdl2-2.0-0 libdrm2 libgbm1 libgles2 libegl1 libgl1-mesa-dri
 	git clone https://github.com/WiringPi/WiringPi.git
 	cd WiringPi
 	./build
-
-	/boot/config.txt を編集する
-
-	sudo nano /boot/config.txt
-
-	[all]セクションに下記のように追記する。
-
-	[all]
-	dtparam=audio=on
-	# dtoverlay=vc4-fkms-v3d		←これを有効にすると起動時に画面が表示されなくなる
-	max_framebuffers=2
-
-	[CTRL]+[O] で保存、[CTRL]+[X] で終了。
 	cd ~
 
 	git clone https://github.com/matheusjgsantos/BlueberryMSX-2.0plus.git
@@ -180,11 +173,16 @@ MSX-mini のために Raspberry Pi Zero W に Blueberry Pi をセットアップする
 	【メモ】
 		https://github.com/matheusjgsantos/BlueberryMSX-2.0plus
 
-2.9. blueberryMSX を起動する
-	cd ~/BlueberryMSX-2.0plus
-	./bluemsx.sh
+		2022年1月1日現在の blueberryMSX2.0plus は、 RaspberryPiZeroWH では音が出ない。
+		これを修正したバージョンを BlueberryMSX-2.0plus_20220104patched.tar.gz として置いておく。
 
-2.10. python をセットアップする
-	sudo apt-get install python3-dev python3-pip
-	sudo apt-get install python3-pygame-sdl2
+2.9. フォントをインストールする
+	TrueTypeFont 源柔ゴシック をダウンロードしてくる。
+	http://jikasei.me/font/genjyuu/
+		genjyuugothic-20150607.zip
 
+	これを /share/font/ の中に解凍する。
+
+2.10. 実行する
+	cd /share/bin
+	./run_msx_mini.sh

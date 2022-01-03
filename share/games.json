@@ -1,0 +1,135 @@
+{
+	"CASIO_03_ski_command.rom": {
+		"title": "[CASIO] 03 スキーコマンド (CASIO)",
+		"cartridge image": "",
+		"screen shot": "",
+		"information": "",
+		"options": "-machine \"MSX - Japanese\" -rom1"
+	},
+	"CASIO_07_flappy_limited_85.rom": {
+		"title": "[CASIO] 07 フラッピー Limited '85 (dB-SOFT)",
+		"cartridge image": "",
+		"screen shot": "",
+		"information": "主人公フラッピーを操作して、ブルーストーンをブルーエリアへ運べ！",
+		"options": "-machine \"MSX - Japanese\" -rom1"
+	},
+	"CASIO_08_yie_ar_kung_fu_SCC.rom": {
+		"title": "[CASIO] 08 イーアルカンフー (Konami)",
+		"cartridge image": "",
+		"screen shot": "",
+		"information": "",
+		"options": "-machine \"MSX - Japanese\" -romtype1 3 -rom1"
+	},
+	"CASIO_12_ice_world.rom": {
+		"title": "[CASIO] 12 アイスワールド (CASIO)",
+		"cartridge image": "",
+		"screen shot": "",
+		"information": "",
+		"options": "-machine \"MSX - Japanese\" -rom1"
+	},
+	"CASIO_13_eagle_fighter.rom": {
+		"title": "[CASIO] 13 イーグルファイター (CASIO)",
+		"cartridge image": "",
+		"screen shot": "",
+		"information": "",
+		"options": "-machine \"MSX - Japanese\" -rom1"
+	},
+	"CASIO_15_zexas_limited.rom": {
+		"title": "[CASIO] 15 ゼクサス Limited (CASIO)",
+		"cartridge image": "",
+		"screen shot": "",
+		"information": "",
+		"options": "-machine \"MSX - Japanese\" -rom1"
+	},
+	"CASIO_16_road_fighter.rom": {
+		"title": "[CASIO] 16 ロードファイター (Konami)",
+		"cartridge image": "",
+		"screen shot": "",
+		"information": "",
+		"options": "-machine \"MSX - Japanese\" -rom1"
+	},
+	"CASIO_17_iga_ninpocho.rom": {
+		"title": "[CASIO] 17 伊賀忍法帖 (CASIO)",
+		"cartridge image": "",
+		"screen shot": "",
+		"information": "",
+		"options": "-machine \"MSX - Japanese\" -rom1"
+	},
+	"CASIO_18_car_fighter.rom": {
+		"title": "[CASIO] 18 カーファイター (CASIO)",
+		"cartridge image": "",
+		"screen shot": "",
+		"information": "",
+		"options": "-machine \"MSX - Japanese\" -rom1"
+	},
+	"CASIO_22_majyo_densetsu.rom": {
+		"title": "[CASIO] 22 魔城伝説 (Konami)",
+		"cartridge image": "",
+		"screen shot": "",
+		"information": "",
+		"options": "-machine \"MSX - Japanese\" -rom1"
+	},
+	"CASIO_23_youkaiyashiki.rom": {
+		"title": "[CASIO] 23 妖怪屋敷 (CASIO)",
+		"cartridge image": "",
+		"screen shot": "",
+		"information": "",
+		"options": "-machine \"MSX - Japanese\" -rom1"
+	},
+	"CASIO_24_koneko_no_daibouken.rom": {
+		"title": "[CASIO] 24 仔猫の大冒険 (CASIO)",
+		"cartridge image": "",
+		"screen shot": "",
+		"information": "",
+		"options": "-machine \"MSX - Japanese\" -rom1"
+	},
+	"CASIO_25_kenjya_no_ishi.rom": {
+		"title": "[CASIO] 25 賢者の石 (CASIO)",
+		"cartridge image": "",
+		"screen shot": "",
+		"information": "",
+		"options": "-machine \"MSX - Japanese\" -rom1"
+	},
+	"CASIO_27_twin_bee_SCC.rom": {
+		"title": "[CASIO] 27 ツインビー (Konami)",
+		"cartridge image": "",
+		"screen shot": "",
+		"information": "",
+		"options": "-machine \"MSX - Japanese\" -romtype1 3 -rom1"
+	},
+	"CASIO_28_iga_ninpocho2.rom": {
+		"title": "[CASIO] 28 伊賀忍法帖2 満月城の戦い (CASIO)",
+		"cartridge image": "",
+		"screen shot": "",
+		"information": "",
+		"options": "-machine \"MSX - Japanese\" -rom1"
+	},
+	"CASIO_29_exoide-z_area5.rom": {
+		"title": "[CASIO] 29 エグゾイドZ エリア5 (CASIO)",
+		"cartridge image": "",
+		"screen shot": "",
+		"information": "",
+		"options": "-machine \"MSX - Japanese\" -rom1"
+	},
+	"CASIO_30_moai_no_hihou.rom": {
+		"title": "[CASIO] 30 モアイの秘宝 (CASIO)",
+		"cartridge image": "",
+		"screen shot": "",
+		"information": "",
+		"options": "-machine \"MSX - Japanese\" -rom1"
+	},
+	"CASIO_31_hadesu_no_monsho.rom": {
+		"title": "[CASIO] 31 ハデスの紋章 (CASIO)",
+		"cartridge image": "",
+		"screen shot": "",
+		"information": "",
+		"options": "-machine \"MSX - Japanese\" -rom1"
+	},
+	"CASIO_32_issun_boushi_no_donnamondai.rom": {
+		"title": "[CASIO] 32 一寸法師のどんなもんだい (CASIO)",
+		"cartridge image": "",
+		"screen shot": "",
+		"information": "",
+		"options": "-machine \"MSX - Japanese\" -rom1"
+	}
+}
