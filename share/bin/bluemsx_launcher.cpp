@@ -113,6 +113,14 @@ public:
 	int i_info_w;
 	int i_info_h;
 	int i_info_item_height;
+	int i_info_rom_cartridge_x;
+	int i_info_rom_cartridge_y;
+	int i_info_rom_cartridge_w;
+	int i_info_rom_cartridge_h;
+	int i_info_screen_shot_x;
+	int i_info_screen_shot_y;
+	int i_info_screen_shot_w;
+	int i_info_screen_shot_h;
 	string s_command;
 	string s_shutdown;
 	string s_bluemsx_path;
@@ -171,6 +179,7 @@ public:
 		this->i_menu_current_item_green	= color[1].get<int>();
 		this->i_menu_current_item_blue	= color[2].get<int>();
 		this->i_current_item			= -1;
+		this->i_top_item				= -1;
 
 		auto position = json_data[ "menu item position" ];
 		this->i_menu_x					= position[0].get<int>();
@@ -198,6 +207,18 @@ public:
 		this->i_info_w					= position[2].get<int>();
 		this->i_info_h					= position[3].get<int>();
 		this->i_info_item_height		= json_data[ "information item height" ].get<int>();
+
+		position = json_data[ "imformation rom cartridge" ];
+		this->i_info_rom_cartridge_x	= position[0].get<int>();
+		this->i_info_rom_cartridge_y	= position[1].get<int>();
+		this->i_info_rom_cartridge_w	= position[2].get<int>();
+		this->i_info_rom_cartridge_h	= position[3].get<int>();
+
+		position = json_data[ "imformation screen shot" ];
+		this->i_info_screen_shot_x		= position[0].get<int>();
+		this->i_info_screen_shot_y		= position[1].get<int>();
+		this->i_info_screen_shot_w		= position[2].get<int>();
+		this->i_info_screen_shot_h		= position[3].get<int>();
 
 		this->s_command					= "";
 		this->s_shutdown				= json_data[ "shutdown" ].get<string>();
@@ -495,7 +516,9 @@ static void put_menu_item( CINFO *p_info, int i_next_item, int animation ) {
 static void put_info( CINFO *p_info ) {
 	SDL_Rect src_rect;
 	SDL_Rect dst_rect;
+	SDL_Surface *p_surface;
 	SDL_Texture *p_texture;
+	string s_file_name;
 
 	SDL_Color item_color = { (Uint8)p_info->i_menu_item_red, (Uint8)p_info->i_menu_item_green, (Uint8)p_info->i_menu_item_blue };
 
@@ -504,6 +527,43 @@ static void put_info( CINFO *p_info ) {
 	string s_information = target_info["information"].get<string>();
 	vector<string> a_information = str_split( s_information, '|' );
 
+	// ROM Cartridge image
+	s_file_name = target_info["cartridge image"].get<string>();
+	if( s_file_name == "" ) {
+		s_file_name = "cartridge.png";			// "No Image"
+	}
+	s_file_name = "../images/" + s_file_name;
+	p_surface = IMG_Load( s_file_name.c_str() );
+	p_texture = SDL_CreateTextureFromSurface( p_info->p_renderer, p_surface );
+
+	dst_rect.x = p_info->i_info_rom_cartridge_x;
+	dst_rect.y = p_info->i_info_rom_cartridge_y;
+	dst_rect.w = p_info->i_info_rom_cartridge_w;
+	dst_rect.h = p_info->i_info_rom_cartridge_h;
+	SDL_RenderCopy( p_info->p_renderer, p_texture, NULL, &dst_rect );
+
+	SDL_FreeSurface( p_surface );
+	SDL_DestroyTexture( p_texture );
+
+	// Screen shot image
+	s_file_name = target_info["screen shot"].get<string>();
+	if( s_file_name == "" ) {
+		s_file_name = "screen_shot.png";		// "No Image"
+	}
+	s_file_name = "../images/" + s_file_name;
+	p_surface = IMG_Load( s_file_name.c_str() );
+	p_texture = SDL_CreateTextureFromSurface( p_info->p_renderer, p_surface );
+
+	dst_rect.x = p_info->i_info_screen_shot_x;
+	dst_rect.y = p_info->i_info_screen_shot_y;
+	dst_rect.w = p_info->i_info_screen_shot_w;
+	dst_rect.h = p_info->i_info_screen_shot_h;
+	SDL_RenderCopy( p_info->p_renderer, p_texture, NULL, &dst_rect );
+
+	SDL_FreeSurface( p_surface );
+	SDL_DestroyTexture( p_texture );
+
+	// Information text
 	dst_rect.x = 0;
 	dst_rect.y = 0;
 	dst_rect.w = p_info->i_screen_width;
@@ -601,8 +661,6 @@ static bool event_proc_for_menu( CINFO *p_info ) {
 	SDL_Texture *p_image_menu = SDL_CreateTextureFromSurface( p_info->p_renderer, p_info->p_image_menu );
 	fadein( p_info, p_image_menu, p_info->i_menu_fadeout_red, p_info->i_menu_fadeout_green, p_info->i_menu_fadeout_blue );
 
-	p_info->i_top_item = -1;
-
 	// 余計な event を読み捨てる 
 	while( SDL_PollEvent( &event ) );
 
@@ -691,10 +749,9 @@ static bool event_proc_for_info( CINFO *p_info ) {
 	SDL_Texture *p_image_info = SDL_CreateTextureFromSurface( p_info->p_renderer, p_info->p_image_info );
 	fadein( p_info, p_image_info, p_info->i_menu_fadein_red, p_info->i_menu_fadein_green, p_info->i_menu_fadein_blue );
 
-	put_info( p_info );
-
 	SDL_RenderClear( p_info->p_renderer );
 	SDL_RenderCopy( p_info->p_renderer, p_image_info, NULL, &rect );
+	put_info( p_info );
 	SDL_RenderPresent( p_info->p_renderer );
 
 	// 余計な event を読み捨てる 

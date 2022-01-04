@@ -6,6 +6,13 @@
 		"information": "",
 		"options": "-machine \"MSX - Japanese\" -rom1"
 	},
+	"CASIO_05_circus_charlie.rom": {
+		"title": "[CASIO] 05 サーカスチャーリー (Konami)",
+		"cartridge image": "",
+		"screen shot": "",
+		"information": "",
+		"options": "-machine \"MSX - Japanese\" -rom1"
+	},
 	"CASIO_07_flappy_limited_85.rom": {
 		"title": "[CASIO] 07 フラッピー Limited '85 (dB-SOFT)",
 		"cartridge image": "",
@@ -13,12 +20,12 @@
 		"information": "主人公フラッピーを操作して、ブルーストーンをブルーエリアへ運べ！",
 		"options": "-machine \"MSX - Japanese\" -rom1"
 	},
-	"CASIO_08_yie_ar_kung_fu_SCC.rom": {
+	"CASIO_08_yie_ar_kung_fu.rom": {
 		"title": "[CASIO] 08 イーアルカンフー (Konami)",
 		"cartridge image": "",
 		"screen shot": "",
 		"information": "",
-		"options": "-machine \"MSX - Japanese\" -romtype1 3 -rom1"
+		"options": "-machine \"MSX - Japanese\" -rom1"
 	},
 	"CASIO_12_ice_world.rom": {
 		"title": "[CASIO] 12 アイスワールド (CASIO)",
@@ -90,12 +97,12 @@
 		"information": "",
 		"options": "-machine \"MSX - Japanese\" -rom1"
 	},
-	"CASIO_27_twin_bee_SCC.rom": {
+	"CASIO_27_twin_bee.rom": {
 		"title": "[CASIO] 27 ツインビー (Konami)",
 		"cartridge image": "",
 		"screen shot": "",
 		"information": "",
-		"options": "-machine \"MSX - Japanese\" -romtype1 3 -rom1"
+		"options": "-machine \"MSX - Japanese\" -rom1"
 	},
 	"CASIO_28_iga_ninpocho2.rom": {
 		"title": "[CASIO] 28 伊賀忍法帖2 満月城の戦い (CASIO)",

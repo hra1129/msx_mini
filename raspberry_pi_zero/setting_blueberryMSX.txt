@@ -125,6 +125,12 @@ MSX-mini のために Raspberry Pi Zero W に Blueberry Pi をセットアップする
 	1行しか無いが、その1行の行末に quiet を追加すると、起動時にダラダラとたくさん表示されるログが出てこなくなる。
 	ラスベリーのアイコンも出てこなくなる。
 
+	起動の高速化で「bluetoothサービスを停止する」とアドバイスしているサイトがいくつかあるが、
+	bluetoothサービスを停止すると音が鳴らなくなるのを確認。要注意。
+
+	起動時に glamor-test が FAILED になる場合、raspi-config → Advanced Options → Glamor で Glamor アクセラレーションを
+	Enable にすると OK になる。
+
 2.6. 自動ログインを設定する
 	sudo raspi-config
 
