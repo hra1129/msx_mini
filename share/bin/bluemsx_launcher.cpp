@@ -87,7 +87,6 @@ public:
 	string s_image_menu_name;
 	SDL_Surface *p_image_info;
 	SDL_Surface *p_image_menu;
-	SDL_Surface *p_backbuffer_surface;			// ★ 
 	CMENUITEM *p_menu_item;
 	int i_menu_fadein_red;
 	int i_menu_fadein_green;
@@ -228,8 +227,6 @@ public:
 		this->p_image_info				= IMG_Load( this->s_image_info_name.c_str() );
 		putchar( '.' );
 		this->p_image_menu				= IMG_Load( this->s_image_menu_name.c_str() );
-		putchar( '.' );
-		this->p_backbuffer_surface		= SDL_CreateRGBSurface( 0, this->i_screen_width, this->i_screen_height, 32, 0, 0, 0, 0 );
 		printf( ".\n" );
 	}
 
@@ -268,10 +265,6 @@ public:
 		if( this->p_image_info != nullptr ) {
 			SDL_FreeSurface( this->p_image_info );
 			this->p_image_info = nullptr;
-		}
-		if( this->p_backbuffer_surface != nullptr ) {
-			SDL_FreeSurface( this->p_backbuffer_surface );
-			this->p_backbuffer_surface = nullptr;
 		}
 		if( this->p_renderer != nullptr ) {
 			SDL_DestroyRenderer( this->p_renderer );
@@ -502,6 +495,7 @@ static void put_menu_item( CINFO *p_info, int i_next_item, int animation ) {
 static void put_info( CINFO *p_info ) {
 	SDL_Rect src_rect;
 	SDL_Rect dst_rect;
+	SDL_Texture *p_texture;
 
 	SDL_Color item_color = { (Uint8)p_info->i_menu_item_red, (Uint8)p_info->i_menu_item_green, (Uint8)p_info->i_menu_item_blue };
 
@@ -514,21 +508,21 @@ static void put_info( CINFO *p_info ) {
 	dst_rect.y = 0;
 	dst_rect.w = p_info->i_screen_width;
 	dst_rect.h = p_info->i_screen_height;
-	SDL_BlitSurface( p_info->p_image_info, NULL, p_info->p_backbuffer_surface, NULL );
 
 	dst_rect.x = p_info->i_info_x;
 	dst_rect.y = p_info->i_info_y;
 	for( auto s_info_line: a_information ) {
 		SDL_Surface *p_font_surface = TTF_RenderUTF8_Solid( p_info->p_info_font, s_info_line.c_str(), item_color );
-
 		SDL_GetClipRect( p_font_surface, &src_rect );
 		dst_rect.w = src_rect.w;
 		dst_rect.h = src_rect.h;
 		if( dst_rect.w > p_info->i_info_w ) {
 			dst_rect.w = p_info->i_info_w;
 		}
-		SDL_BlitSurface( p_font_surface, &src_rect, p_info->p_backbuffer_surface, &dst_rect );
+		p_texture = SDL_CreateTextureFromSurface( p_info->p_renderer, p_font_surface );
+		SDL_RenderCopy( p_info->p_renderer, p_texture, NULL, &dst_rect );
 		SDL_FreeSurface( p_font_surface );
+		SDL_DestroyTexture( p_texture );
 
 		dst_rect.y = dst_rect.y + p_info->i_info_item_height;
 	}
@@ -694,14 +688,17 @@ static bool event_proc_for_info( CINFO *p_info ) {
 	rect.w = p_info->i_screen_width;
 	rect.h = p_info->i_screen_height;
 
-	put_info( p_info );
-
-	SDL_Texture *p_image_info = SDL_CreateTextureFromSurface( p_info->p_renderer, p_info->p_backbuffer_surface );
+	SDL_Texture *p_image_info = SDL_CreateTextureFromSurface( p_info->p_renderer, p_info->p_image_info );
 	fadein( p_info, p_image_info, p_info->i_menu_fadein_red, p_info->i_menu_fadein_green, p_info->i_menu_fadein_blue );
+
+	put_info( p_info );
 
 	SDL_RenderClear( p_info->p_renderer );
 	SDL_RenderCopy( p_info->p_renderer, p_image_info, NULL, &rect );
 	SDL_RenderPresent( p_info->p_renderer );
+
+	// 余計な event を読み捨てる 
+	while( SDL_PollEvent( &event ) );
 
 	// ボタン入力待ち 
 	bool is_accept = false;
